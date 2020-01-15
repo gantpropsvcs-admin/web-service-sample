@@ -23,21 +23,23 @@ const appRouter = function(app) {
 
             // validate id is a number
             if (isNaN(parseInt(priceId))) {
-                let err = new Error('Method is expecting a number');
+                let err = new Error();
                 err.status = 400;
+                err.message = 'Method is expecting a number';
                 throw err;
             }
 
             let price = diesel.find(dieselprice => dieselprice.id === parseInt(priceId));  
             
             if (!price) {
-                let err = new Error('A diesel price for id='+priceId+' was not found');
+                let err = new Error();
                 err.status = 400;
+                err.message = 'A diesel price for id='+priceId+' was not found';
                 throw err;
             }
             res.status(200).send(price);
         } catch (e) {
-            res.status(400).send('A diesel price was not found');
+            res.status(400).send(e);
         }
 
     });
@@ -111,6 +113,14 @@ const appRouter = function(app) {
             res.status(200).send(JSON.stringify(price));
         } catch (error) {
             res.status(400).send("Error updating diesel price");
+        }
+    });
+
+    app.delete("/diesel/:id", function(req,res,next){
+        try {
+
+        } catch (e) {
+
         }
     });
     
