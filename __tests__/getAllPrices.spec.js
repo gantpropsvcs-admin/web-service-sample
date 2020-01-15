@@ -1,3 +1,0 @@
-describe("Get all items", () => {
-
-});
