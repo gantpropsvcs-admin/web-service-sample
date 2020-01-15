@@ -118,9 +118,39 @@ const appRouter = function(app) {
 
     app.delete("/diesel/:id", function(req,res,next){
         try {
+            let priceId = req.params.id;
+
+            // validate id is a number
+            if (isNaN(parseInt(priceId))) {
+                let err = new Error('Method is expecting a number');
+                err.status = 400;
+                throw err;
+            }
+
+            let price = diesel.find(dieselprice =>  dieselprice.id === parseInt(priceId));
+
+            if (!price) {
+                let err = new Error();
+                err.status = 400;
+                err.message = 'A diesel price for id='+priceId+' was not found';
+                throw err;
+            }
+
+            let newprices = diesel.filter(dieselprice => dieselprice.id !== parseInt(priceId));
+
+            let oldprice = newprices.find(dieselprice =>  dieselprice.id === parseInt(priceId));
+            console.log(oldprice)
+            if (!oldprice) {
+                fs.writeFileSync(datafilename, JSON.stringify(newprices));
+
+                res.status(200).send("Id="+priceId+" was deleted successfully.");                
+            } else {
+                res.status(400).send("Id="+priceId+" was not deleted."); 
+            }
+
 
         } catch (e) {
-
+            next(e);
         }
     });
     
