@@ -9,6 +9,4 @@ The service contains methods for:
 - put (update)
 - delete
 
-Cypress was used to create unit tests for:
-- get calls
-- delete calls
+Cypress was used to create unit tests for GET, POST and DELETE.  The tests are not exhaustive nor complete.
