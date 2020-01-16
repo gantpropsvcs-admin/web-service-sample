@@ -139,7 +139,7 @@ const appRouter = function(app) {
             let newprices = diesel.filter(dieselprice => dieselprice.id !== parseInt(priceId));
 
             let oldprice = newprices.find(dieselprice =>  dieselprice.id === parseInt(priceId));
-            console.log(oldprice)
+
             if (!oldprice) {
                 fs.writeFileSync(datafilename, JSON.stringify(newprices));
 
